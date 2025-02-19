@@ -1,4 +1,3 @@
-// src/components/Layout.jsx
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import FormField from './FormField';
