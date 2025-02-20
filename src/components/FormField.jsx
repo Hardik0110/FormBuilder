@@ -85,38 +85,14 @@ const FormField = ({ field, index, onDelete, onEdit, onMove }) => {
 };
 
 const renderField = (field) => {
-  const baseInputClass = "mt-2 w-full p-2 border border-gray-300 rounded-md bg-gray-50 cursor-not-allowed";
-  
-  switch (field.type) {
-    case 'text':
-    case 'email':
-    case 'number':
-      return (
-        <input
-          type={field.type}
-          placeholder={field.placeholder}
-          className={baseInputClass}
-          disabled
-        />
-      );
-    case 'select':
-      return (
-        <select className={baseInputClass} disabled>
-          <option value="">{field.placeholder}</option>
-        </select>
-      );
-    case 'radio':
-      return (
-        <div className="mt-2">
-          <label className="inline-flex items-center">
-            <input type="radio" className="text-blue-600" disabled />
-            <span className="ml-2 text-gray-700">{field.placeholder}</span>
-          </label>
-        </div>
-      );
-    default:
-      return null;
-  }
-};
+  return (
+    <div className="mt-2 p-2 bg-gray-50 rounded-md border border-gray-200">
+      <span className="text-sm text-gray-600">Type: {field.type}</span>
+      {field.validation?.required && (
+        <span className="ml-2 text-red-500 text-sm">*Required</span>
+      )}
+    </div>
+  );
+}
 
 export default FormField;

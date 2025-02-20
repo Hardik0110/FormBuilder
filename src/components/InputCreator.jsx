@@ -6,8 +6,16 @@ const InputCreator = ({ onAdd, editingField }) => {
     type: 'text',
     label: '',
     placeholder: '',
-    required: false
+    showValidation: false,
+    validation: {
+      required: false,
+      min: '',
+      max: '',
+      maxLength: '',
+      pattern: ''
+    }
   });
+
 
   useEffect(() => {
     if (editingField) {
@@ -17,10 +25,21 @@ const InputCreator = ({ onAdd, editingField }) => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFieldConfig(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    if (name.startsWith('validation.')) {
+      const validationField = name.split('.')[1];
+      setFieldConfig(prev => ({
+        ...prev,
+        validation: {
+          ...prev.validation,
+          [validationField]: type === 'checkbox' ? checked : value
+        }
+      }));
+    } else {
+      setFieldConfig(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -87,14 +106,81 @@ const InputCreator = ({ onAdd, editingField }) => {
           <label className="flex items-center space-x-2">
             <input
               type="checkbox"
-              name="required"
-              checked={fieldConfig.required}
+              name="showValidation"
+              checked={fieldConfig.showValidation}
               onChange={handleChange}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
-            <span className="text-sm font-medium text-gray-700">Required</span>
+            <span className="text-sm font-medium text-gray-700">Show Validation Options</span>
           </label>
         </div>
+
+        {fieldConfig.showValidation && (
+          <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+            <div>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  name="validation.required"
+                  checked={fieldConfig.validation.required}
+                  onChange={handleChange}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <span className="text-sm font-medium text-gray-700">Required</span>
+              </label>
+            </div>
+
+            {fieldConfig.type === 'number' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Min Value</label>
+                  <input
+                    type="number"
+                    name="validation.min"
+                    value={fieldConfig.validation.min}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Max Value</label>
+                  <input
+                    type="number"
+                    name="validation.max"
+                    value={fieldConfig.validation.max}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </>
+            )}
+
+            {(fieldConfig.type === 'text' || fieldConfig.type === 'email') && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Max Length</label>
+                  <input
+                    type="number"
+                    name="validation.maxLength"
+                    value={fieldConfig.validation.maxLength}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Pattern (regex)</label>
+                  <input
+                    type="text"
+                    name="validation.pattern"
+                    value={fieldConfig.validation.pattern}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
         <button 
           type="submit" 

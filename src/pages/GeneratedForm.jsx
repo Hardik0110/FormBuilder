@@ -27,17 +27,26 @@ const GeneratedForm = () => {
               <div key={field.id} className="relative">
                 <label className="block mb-2 font-medium text-gray-700">
                   {field.label}
-                  {field.required && <span className="text-red-500 ml-1">*</span>}
+                  {field.validation?.required && <span className="text-red-500 ml-1">*</span>}
                 </label>
                 <input
                   type={field.type}
                   placeholder={field.placeholder}
-                  {...register(field.label, { required: field.required })}
+                  {...register(field.label, {
+                    required: field.validation?.required,
+                    min: field.validation?.min,
+                    max: field.validation?.max,
+                    maxLength: field.validation?.maxLength,
+                    pattern: field.validation?.pattern ? {
+                      value: new RegExp(field.validation.pattern),
+                      message: "Pattern doesn't match"
+                    } : undefined
+                  })}
                   className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
                 />
                 {errors[field.label] && (
                   <span className="absolute -bottom-5 left-0 text-red-500 text-sm">
-                    This field is required
+                    {errors[field.label].message || "This field is required"}
                   </span>
                 )}
               </div>
@@ -52,7 +61,7 @@ const GeneratedForm = () => {
         </div>
       </div>
     </div>
-  );
+   );
 };
 
 export default GeneratedForm;
