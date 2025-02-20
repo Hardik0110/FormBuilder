@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import InputCreator from '../components/InputCreator';
@@ -9,6 +8,7 @@ const HomePage = () => {
   const [formFields, setFormFields] = useState([]);
   const [editingField, setEditingField] = useState(null);
 
+  
   const handleAddField = (newField) => {
     if (editingField) {
       setFormFields(formFields.map(field => 
