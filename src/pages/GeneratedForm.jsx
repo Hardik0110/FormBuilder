@@ -15,19 +15,19 @@ const GeneratedForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-r from-violet-900 via-indigo-900 to-purple-900 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white shadow-xl rounded-xl overflow-hidden">
-          <div className="px-8 py-6 bg-gradient-to-r from-blue-600 to-blue-700">
+        <div className="bg-gray-900 shadow-2xl rounded-2xl overflow-hidden border border-violet-500/20 transition-all duration-300 hover:border-violet-500/40">
+          <div className="px-8 py-6 bg-gradient-to-r from-violet-800 to-purple-800 border-b border-violet-500/20">
             <h1 className="text-2xl font-bold text-white">Generated Form</h1>
           </div>
           
           <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
             {fields.map((field) => (
-              <div key={field.id} className="relative">
-                <label className="block mb-2 font-medium text-gray-700">
+              <div key={field.id} className="relative animate-slideIn">
+                <label className="block mb-2 font-medium text-gray-200">
                   {field.label}
-                  {field.validation?.required && <span className="text-red-500 ml-1">*</span>}
+                  {field.validation?.required && <span className="text-purple-400 ml-1">*</span>}
                 </label>
                 <input
                   type={field.type}
@@ -42,10 +42,10 @@ const GeneratedForm = () => {
                       message: "Pattern doesn't match"
                     } : undefined
                   })}
-                  className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                  className="w-full p-2.5 border border-violet-500/20 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-gray-800 text-white placeholder-gray-400 transition-all duration-200"
                 />
                 {errors[field.label] && (
-                  <span className="absolute -bottom-5 left-0 text-red-500 text-sm">
+                  <span className="absolute -bottom-5 left-0 text-purple-400 text-sm">
                     {errors[field.label].message || "This field is required"}
                   </span>
                 )}
@@ -53,7 +53,7 @@ const GeneratedForm = () => {
             ))}
             <button 
               type="submit"
-              className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium shadow-lg mt-8"
+              className="w-full px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg hover:from-violet-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-lg mt-8 transform hover:scale-[1.02]"
             >
               Submit
             </button>
@@ -61,7 +61,8 @@ const GeneratedForm = () => {
         </div>
       </div>
     </div>
-   );
+  );
 };
+
 
 export default GeneratedForm;
