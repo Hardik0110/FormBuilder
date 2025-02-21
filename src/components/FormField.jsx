@@ -52,27 +52,27 @@ const FormField = ({ field, index, onDelete, onEdit, onMove }) => {
   return (
     <div 
       ref={ref}
-      className={`p-4 border border-gray-200 rounded-lg shadow-md hover:shadow-lg 
-        transition-all duration-200 ${isDragging ? 'opacity-50' : ''} 
-        bg-gradient-to-r from-white to-gray-50 cursor-move`}
+      className={`p-5 border border-gray-300 rounded-2xl shadow-xl hover:shadow-2xl 
+        transition-all duration-300 ${isDragging ? 'opacity-50 scale-95' : ''} 
+        bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 cursor-grab active:cursor-grabbing`}
       data-handler-id={handlerId}
     >
       <div className="flex justify-between items-center">
-        <span className="font-medium text-gray-800">{field.label}</span>
-        <div className="space-x-2">
+        <span className="font-semibold text-gray-900 text-lg tracking-wide">{field.label}</span>
+        <div className="space-x-3">
           <button 
             onClick={() => onEdit(field.id)}
-            className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 
-              text-white rounded-md shadow hover:from-blue-600 hover:to-blue-700 
-              transition-all duration-200"
+            className="px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-600 
+              text-white rounded-full shadow-lg hover:from-blue-500 hover:to-blue-700 
+              transition-all duration-300 hover:scale-105 active:animate-ping"
           >
             Edit
           </button>
           <button 
             onClick={() => onDelete(field.id)}
-            className="px-3 py-1.5 bg-gradient-to-r from-red-500 to-red-600 
-              text-white rounded-md shadow hover:from-red-600 hover:to-red-700 
-              transition-all duration-200"
+            className="px-4 py-2 bg-gradient-to-r from-red-400 to-red-600 
+              text-white rounded-full shadow-lg hover:from-red-500 hover:to-red-700 
+              transition-all duration-300 hover:scale-105 active:animate-bounce"
           >
             Delete
           </button>
@@ -85,10 +85,10 @@ const FormField = ({ field, index, onDelete, onEdit, onMove }) => {
 
 const renderField = (field) => {
   return (
-    <div className="mt-2 p-2 bg-gray-50 rounded-md border border-gray-200">
-      <span className="text-sm text-gray-600">Type: {field.type}</span>
+    <div className="mt-3 p-3 bg-white rounded-xl border border-gray-300 shadow-md">
+      <span className="text-sm text-gray-700 font-medium">Type: {field.type}</span>
       {field.validation?.required && (
-        <span className="ml-2 text-red-500 text-sm">*Required</span>
+        <span className="ml-2 text-red-500 text-sm font-semibold">*Required</span>
       )}
     </div>
   );
