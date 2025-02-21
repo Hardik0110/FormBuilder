@@ -9,6 +9,16 @@ const HomePage = () => {
   const [editingField, setEditingField] = useState(null);
 
   const handleAddField = (newField) => {
+    if (!newField.label || !newField.type) {
+      alert('Please fill in all required fields');
+      return;
+    }
+  
+    if (newField.type === 'radio' && (!newField.options || newField.options.length === 0)) {
+      alert('Please add at least one option for radio button');
+      return;
+    }
+  
     if (editingField) {
       setFormFields(formFields.map(field =>
         field.id === editingField.id ? { ...newField, id: editingField.id } : field
