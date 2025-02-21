@@ -7,12 +7,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 const HomePage = () => {
   const [formFields, setFormFields] = useState([]);
   const [editingField, setEditingField] = useState(null);
-
+          
   
   const handleAddField = (newField) => {
-    if (editingField) {
+  if (editingField) {
       setFormFields(formFields.map(field => 
-        field.id === editingField.id ? { ...newField, id: field.id } : field
+        field.id === editingField.id ? { ...newField, id: editingField.id } : field
       ));
       setEditingField(null);
     } else {
@@ -29,7 +29,7 @@ const HomePage = () => {
     setEditingField(fieldToEdit);
   };
 
-  const handleMoveField = (dragIndex, hoverIndex) => {
+  const handleMoveField = (dragIndex, hoverIndex) => {  
     const newFields = [...formFields];
     const draggedField = newFields[dragIndex];
     newFields.splice(dragIndex, 1);
@@ -39,7 +39,7 @@ const HomePage = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="flex h-screen  bg-indigo-200">
         <div className="w-2/3 p-6">
           <Layout 
             fields={formFields} 
@@ -48,7 +48,7 @@ const HomePage = () => {
             onMove={handleMoveField}
           />
         </div>
-        <div className="w-1/3 p-6 border-l border-gray-200 shadow-lg bg-white">
+        <div className="w-1/3 p-6 shadow-lg bg-indigo-200">
           <InputCreator 
             onAdd={handleAddField} 
             editingField={editingField}

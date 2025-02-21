@@ -1,4 +1,3 @@
-// src/components/InputCreator.jsx
 import React, { useState, useEffect } from 'react';
 
 const InputCreator = ({ onAdd, editingField }) => {
@@ -17,9 +16,20 @@ const InputCreator = ({ onAdd, editingField }) => {
   });
 
 
-  useEffect(() => {
+  useEffect(() => { 
     if (editingField) {
-      setFieldConfig(editingField);
+      setFieldConfig({
+        ...editingField,
+        showValidation: !!editingField.validation,
+        validation: editingField.validation || {
+          required: false,
+          min: '',
+          max: '',
+          maxLength: '',
+          pattern: '',
+          ...editingField.validation
+        }
+      });
     }
   }, [editingField]);
 
@@ -42,16 +52,28 @@ const InputCreator = ({ onAdd, editingField }) => {
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(fieldConfig);
+    const fieldData = {
+      ...fieldConfig,
+      validation: fieldConfig.showValidation ? fieldConfig.validation : undefined
+    }
+    onAdd(fieldData);
     if (!editingField) {
       setFieldConfig({
         type: 'text',
         label: '',
         placeholder: '',
-        required: false
-      });
+        showValidation: false,
+        validation: {
+          required: false,
+          min: '',
+          max: '',
+          maxLength: '',
+          pattern: ''
+        }
+      })
     }
   };
 
@@ -73,7 +95,6 @@ const InputCreator = ({ onAdd, editingField }) => {
             <option value="text">Text</option>
             <option value="email">Email</option>
             <option value="number">Number</option>
-            <option value="select">Select</option>
             <option value="radio">Radio</option>
           </select>
         </div>
