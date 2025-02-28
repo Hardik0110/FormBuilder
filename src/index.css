@@ -1,25 +1,114 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-900 bg-gray-100;
+  }
+}
+
+@layer utilities {
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 15s ease infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .animate-spin-reverse {
+    animation: spin-reverse 1s linear infinite;
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
   from {
+    transform: translateY(20px);
     opacity: 0;
-    transform: translateX(20px);
   }
   to {
+    transform: translateY(0);
     opacity: 1;
-    transform: translateX(0);
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
-.animate-slideIn {
-  animation: slideIn 0.5s ease-out;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-violet-500/50 rounded-full hover:bg-violet-500/70 transition-colors duration-200;
+}
+
+/* Form element focus styles */
+input:focus, select:focus, textarea:focus {
+  @apply outline-none ring-2 ring-violet-500/50;
+}
+
+/* Custom radio button styles */
+input[type="radio"] {
+  @apply w-4 h-4 text-violet-600 border-violet-500/30 focus:ring-violet-500;
+}
+
+/* Toast customization */
+.Toastify__toast {
+  @apply bg-gray-900/90 backdrop-blur-sm text-white rounded-lg border border-violet-500/20;
+}
+
+.Toastify__progress-bar {
+  @apply bg-violet-500;
+}
+
+/* Disable animations if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
